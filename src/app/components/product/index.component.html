@@ -1,21 +1,39 @@
-<h3>Product List</h3>
-<table border="1">
-  <tr>
-    <th>id</th>
-    <th>name</th>
-    <th>price</th>
-    <th>photo</th>
-    <th>buy</th>
-  </tr>
-  <tr *ngFor="let product of products">
-    <td>{{product.id}}</td>
-    <td>{{product.name}}</td>
-    <td>{{product.price}}</td>
-    <td>
+<mat-table [dataSource]="products">
+
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+    <mat-cell *matCellDef="let product">{{ product.id }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+    <mat-cell *matCellDef="let product">{{ product.name }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="price">
+    <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
+    <mat-cell *matCellDef="let product">{{ product.price }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="image">
+    <mat-header-cell *matHeaderCellDef>Image</mat-header-cell>
+    <mat-cell *matCellDef="let product">
       <img src="{{product.photo}}" width="50">
-    </td>
-    <td>
-      <a [routerLink]="['/cart', { id:product.id }]">Buy Now</a>
-    </td>
-  </tr>
-</table>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="buy">
+    <mat-header-cell *matHeaderCellDef>Purchase</mat-header-cell>
+    <mat-cell *matCellDef="let product">
+      <button mat-raised-button color="primary" [routerLink]="['/cart', { id:product.id }]">
+        Buy Now
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
+</mat-table>
+
+
+

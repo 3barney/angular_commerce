@@ -1,29 +1,45 @@
-<h3>Cart Info</h3>
-<table border="1">
-  <tr>
-    <th>Option</th>
-    <th>Id</th>
-    <th>Name</th>
-    <th>Photo</th>
-    <th>Price</th>
-    <th>Quantity</th>
-    <th>Sub Total</th>
-  </tr>
-  <tr *ngFor="let item of items">
-    <td align="center">
-      <a (click)="remove(item.product.id)">X</a>
-    </td>
-    <td>{{item.product.id}}</td>
-    <td>{{item.product.name}}</td>
-    <td>
-      <img src="{{item.product.photo}}" width="50">
-    </td>
-    <td>{{item.product.price}}</td>
-    <td>{{item.quantity}}</td>
-    <td>{{item.product.price * item.quantity}}</td>
-  </tr>
-  <tr>
-    <td colspan="6" align="right">Total</td>
-    <td>{{total}}</td>
-  </tr>
-</table>
+<mat-table [dataSource]="items">
+
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+    <mat-cell *matCellDef="let cartItem">{{ cartItem.product.id }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+    <mat-cell *matCellDef="let cartItem">{{ cartItem.product.name }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="price">
+    <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
+    <mat-cell *matCellDef="let cartItem">{{ cartItem.product.price }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="quantity">
+    <mat-header-cell *matHeaderCellDef>Quantity</mat-header-cell>
+    <mat-cell *matCellDef="let cartItem">{{ cartItem.quantity }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="subTotal">
+    <mat-header-cell *matHeaderCellDef>Sub-Total</mat-header-cell>
+    <mat-cell *matCellDef="let cartItem">{{ cartItem.product.price * cartItem.quantity }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="remove">
+    <mat-header-cell *matHeaderCellDef>Remove</mat-header-cell>
+    <mat-cell *matCellDef="let cartItem">
+      <button mat-stroked-button color="warn" (click)="remove(cartItem.product.id)">
+        Remove
+      </button>
+    </mat-cell>
+  </ng-container>
+
+
+  <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
+
+</mat-table>
+
+<div align="center" >
+  <h2>Total: <span>{{ total }}</span></h2>
+</div>

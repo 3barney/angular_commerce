@@ -11,6 +11,7 @@ import { ProductService } from '../../services/product.service';
 
 export class CartComponent implements OnInit {
 
+  public columnsToDisplay = ['id', 'name', 'price', 'quantity', 'subTotal', 'remove'];
   public items: Item[];
   public total = 0;
 
@@ -35,20 +36,19 @@ export class CartComponent implements OnInit {
           const cart: any = JSON.parse(localStorage.getItem('cart'));
           let index = -1;
           for (let i = 0; i < cart.length; i++) {
-            const cartItem: Item = JSON.parse(cart[i]);
-            if (cartItem.product.id === id) {
+            const savedItem = JSON.parse(cart[i]);
+            if (savedItem.product.id === id) {
               index = i;
               break;
             }
           }
-
           if (index === -1) {
             cart.push(JSON.stringify(item));
             localStorage.setItem('cart', JSON.stringify(cart));
           } else {
-            const cartItems: Item = JSON.parse(cart[index]);
-            cartItems.quantity += 1;
-            cart[index] = JSON.stringify(item);
+            const itemInCart: Item = JSON.parse(cart[index]);
+            itemInCart.quantity += 1;
+            cart[index] = JSON.stringify(itemInCart);
             localStorage.setItem('cart', JSON.stringify(cart));
           }
         }
