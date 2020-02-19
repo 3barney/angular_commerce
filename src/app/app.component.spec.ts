@@ -42,7 +42,7 @@ describe('AppComponent', () => {
     fixture.detectChanges();
 
     const rowElements = de.nativeElement.querySelectorAll('h1');
-    expect(rowElements[0].innerHTML).toBe('E-commerce')
+    expect(rowElements[0].innerHTML).toBe('E-commerce');
     expect(rowElements.length).toBe(1);
   });
 
