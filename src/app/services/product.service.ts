@@ -38,14 +38,11 @@ export class ProductService {
   }
 
   find(id: string): Product {
-    console.log({ id })
-    console.log( this.getSelectedIndex(id))
     return this.products[this.getSelectedIndex(id)];
   }
 
   private getSelectedIndex(id: string): number {
     for (let index = 0; index < this.products.length; index++) {
-      console.log({ productId: this.products[index].id}, id)
       if (this.products[index].id === id) {
         return index;
       }
